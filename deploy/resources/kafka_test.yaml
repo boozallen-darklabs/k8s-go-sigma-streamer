@@ -9,6 +9,6 @@ spec:
       - name: integration-test
         image: singe/integration_test
         imagePullPolicy: IfNotPresent
-        command: ["python", "produce_kafka_test_data.py"] 
+        command: ["python", "produce.py"] 
       restartPolicy: Never
   backoffLimit: 1
