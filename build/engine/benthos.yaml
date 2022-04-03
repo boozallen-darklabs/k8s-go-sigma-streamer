@@ -1,0 +1,12 @@
+# Test config
+input:
+  label: ""
+  stdin:
+    codec: lines
+
+pipeline:
+  processors:
+  - singe: {}
+
+output:
+  stdout: {}
