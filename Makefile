@@ -1,10 +1,10 @@
 .PHONY: build
 
 apply: create_namespace
-	helmfile --file deploy/helmfile.kafka.yaml $(MAKE_HELM_OPTIONS) apply
+	cd deploy && helmfile apply
 
 destroy:
-	helmfile --file deploy/helmfile.kafka.yaml $(MAKE_HELM_OPTIONS) destroy
+	cd deploy && helmfile destroy --skip-deps
 
 update_rules:
 	cd make && python3 update_rules.py
