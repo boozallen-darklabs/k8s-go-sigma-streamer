@@ -1,0 +1,16 @@
+title: Test
+id: 5ba715b6-71b7-44fd-8245-f66893e81b88
+status: test
+description: description
+author: someone
+date: 2022/04/02
+modified: 2022/04/02
+logsource:
+  category: cdns
+detection:
+  selection:
+    transaction_id: 49075
+  condition: selection
+level: high
+tags:
+  - test.tag

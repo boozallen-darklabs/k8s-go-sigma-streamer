@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  engine:
+    image: singe/engine
+    build:
+      context: .
+      dockerfile: engine/Dockerfile
+  test:
+    image: singe/integration_test
+    build:
+      context: test

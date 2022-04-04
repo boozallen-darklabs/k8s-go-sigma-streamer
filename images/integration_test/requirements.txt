@@ -1,3 +1,0 @@
-confluent-kafka
-grpcio-tools
-requests

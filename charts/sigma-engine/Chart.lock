@@ -1,6 +1,6 @@
 dependencies:
-- name: onechart
-  repository: https://chart.onechart.dev
-  version: 0.32.0
-digest: sha256:56f7f5220f0a0ac0b9d9252c748b6312cc74c5934ca7fe2fde97a862519cc2fa
-generated: "2021-12-14T12:26:29.223944-05:00"
+- name: benthos
+  repository: https://benthosdev.github.io/benthos-helm-chart
+  version: 0.4.2
+digest: sha256:94a4d268f07e11a12c21d215f7d73fc547a497eee9f1fb39b848295469bf1147
+generated: "2022-04-02T20:58:57.303119211-05:00"

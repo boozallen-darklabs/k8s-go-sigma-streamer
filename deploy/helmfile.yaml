@@ -1,0 +1,119 @@
+helmDefaults:
+  createNamespace: false
+
+repositories:
+  - name: bitnami
+    url: https://charts.bitnami.com/bitnami
+  - name: benthos
+    url: https://benthosdev.github.io/benthos-helm-chart
+
+releases:
+  - name: kafka
+    namespace: se
+    chart: bitnami/kafka
+    values:
+      - logRetentionBytes: _536870912
+
+  - name: siem
+    namespace: se
+    chart: bitnami/elasticsearch
+    values:
+    - global:
+        kibanaEnabled: true
+    - master:
+        replicas: 2
+    - coordinating:
+        replicas: 1
+    - data:
+        replicas: 1
+
+  - name: sigma-engine
+    namespace: se
+    chart: ../charts/sigma-engine/
+    values:
+      - benthos:
+          image:
+            repository: "{{ .Values.registry }}/engine"
+            tag: latest
+            pullPolicy: {{ .Values.pullPolicy }}
+          streams:
+            enabled: false
+          config: |
+            input:
+              kafka:
+                addresses:
+                - kafka.se.svc.cluster.local:9092
+                consumer_group: singe
+                topics:
+                - cdns-cdns
+                - checkpoint-firewall
+                - juniper-junos
+                - juniper-netscreen
+                - panw-panos
+                - system-syslog
+                - winlog-other
+                - winlog-sysmon
+                - winlogbeat-ecs
+                - zeek-conn
+                - zeek-dce_rpc
+                - zeek-dhcp
+                - zeek-dnp3
+                - zeek-dns
+                - zeek-dpd
+                - zeek-files
+                - zeek-http
+                - zeek-intel
+                - zeek-irc
+                - zeek-kerberos
+                - zeek-modbus
+                - zeek-mysql
+                - zeek-notice
+                - zeek-ntlm
+                - zeek-pe
+                - zeek-radius
+                - zeek-rdp
+                - zeek-rfb
+                - zeek-sip
+                - zeek-smb_cmd
+                - zeek-smb_files
+                - zeek-smb_mapping
+                - zeek-smtp
+                - zeek-snmp
+                - zeek-socks
+                - zeek-ssh
+                - zeek-ssl
+                - zeek-traceroute
+                - zeek-tunnel
+                - zeek-weird
+            pipeline:
+              processors:
+              - singe: {}
+            output:
+              broker:
+                pattern: fan_out
+                outputs:
+                - elasticsearch:
+                    urls:
+                    - "http://${SIEM_COORDINATING_ONLY_SERVICE_HOST}:9200"
+                    index: singe
+                    type: doc
+                    batching:
+                      byte_size: 5000
+                      count: 0
+                      period: 5s
+                - kafka:
+                    addresses:
+                      - kafka.se.svc.cluster.local:9092
+                    topic: alerts
+                    client_id: singe
+                    target_version: 1.0.0
+
+
+environments:
+  default:
+    values:
+    - registry:
+        singe
+
+values:
+- pullPolicy: IfNotPresent

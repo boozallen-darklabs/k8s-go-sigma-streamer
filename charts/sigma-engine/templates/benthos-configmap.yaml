@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: benthos-streams
+data:
+  config.yaml: |
+    http:
+      address: 0.0.0.0:4195
+    input:
+      kafka:
+        addresses:
+        - kafka:9092
+        consumer_group: singe
+        topics:
+        - cdns-cdns
+        - checkpoint-firewall
+        - juniper-junos
+        - juniper-netscreen
+        - panw-panos
+        - system-syslog
+        - winlog-other
+        - winlog-sysmon
+        - winlogbeat-ecs
+        - zeek-conn
+        - zeek-dce_rpc
+        - zeek-dhcp
+        - zeek-dnp3
+        - zeek-dns
+        - zeek-dpd
+        - zeek-files
+        - zeek-http
+        - zeek-intel
+        - zeek-irc
+        - zeek-kerberos
+        - zeek-modbus
+        - zeek-mysql
+        - zeek-notice
+        - zeek-ntlm
+        - zeek-pe
+        - zeek-radius
+        - zeek-rdp
+        - zeek-rfb
+        - zeek-sip
+        - zeek-smb_cmd
+        - zeek-smb_files
+        - zeek-smb_mapping
+        - zeek-smtp
+        - zeek-snmp
+        - zeek-socks
+        - zeek-ssh
+        - zeek-ssl
+        - zeek-traceroute
+        - zeek-tunnel
+        - zeek-weird
+    pipeline:
+      processors:
+      - singe: {}
+    output:
+      stdout: {}
