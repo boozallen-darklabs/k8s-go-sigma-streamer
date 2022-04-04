@@ -1,8 +1,0 @@
-[
-  {
-    "repo": "https://github.com/SigmaHQ/sigma",
-    "dir": "oss-rules",
-    "branch": "master",
-    "path": "rules/"
-  }
-]
